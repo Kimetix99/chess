@@ -37,7 +37,8 @@ class Chess:
             current_width=0
         board.pack()
         
-
+    def create_pices(self):
+        pass
 
 
 if __name__ == "__main__":
