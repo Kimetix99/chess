@@ -72,7 +72,7 @@ if __name__ == "__main__":
     board = Board()
     chess.display_pices(board)
     game=Game(chess)
-    game.start()
+    game.start_game()
     window.mainloop()
         
 

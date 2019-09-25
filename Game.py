@@ -3,9 +3,8 @@ class Game:
     def __init__ (self,chess):
         self.chess = chess
 
-    def start(self):
+    def start_game(self):
         self.chess.board.bind("<Button-1>", self.click_handler)
-
 
     def click_handler(self,event):
         current_pos_x = self.chess.size_to_x_coordinates(event.x)
