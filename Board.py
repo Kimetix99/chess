@@ -20,3 +20,11 @@ class Board:
             [Pawn("white_pawn_1","white",PhotoImage(file="./img/white_p.png"),True),Pawn("white_pawn_2","white",PhotoImage(file="./img/white_p.png"),True),Pawn("white_pawn_3","white",PhotoImage(file="./img/white_p.png"),True),Pawn("white_pawn_4","white",PhotoImage(file="./img/white_p.png"),True),Pawn("white_pawn_5","white",PhotoImage(file="./img/white_p.png"),True),Pawn("white_pawn_6","white",PhotoImage(file="./img/white_p.png"),True),Pawn("white_pawn_7","white",PhotoImage(file="./img/white_p.png"),True),Pawn("white_pawn_8","white",PhotoImage(file="./img/white_p.png"),True)],
             [Tower("white_left_tower","white",PhotoImage(file="./img/white_t.png"),True),Horse("white_left_horse","white",PhotoImage(file="./img/white_h.png"),True),Bishop("white_left_bishop","white",PhotoImage(file="./img/white_b.png"),True),King("white_king","white",PhotoImage(file="./img/white_k.png"),True),Queen("white_queen", "white",PhotoImage(file="./img/white_q.png"),True),Bishop("white_right_bishop","white",PhotoImage(file="./img/white_b.png"),True),Horse("white_right_horse","white",PhotoImage(file="./img/white_h.png"),True),Tower("white_right_tower","white",PhotoImage(file="./img/white_t.png"),True)]
         ]
+        self.black_king_alive=True
+        self.white_king_alive=True
+
+    def contains_pice(self,posX,posY):
+        return self.board[posX][posY]!=""
+    
+    def kings_alive(self):
+        return self.black_king_alive and self.white_king_alive
