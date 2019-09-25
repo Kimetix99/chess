@@ -1,5 +1,6 @@
 from tkinter import *
-from Board import Board
+from Board import *
+from Game import *
 import math 
 
 class Chess:
@@ -61,12 +62,6 @@ class Chess:
 
     def size_to_y_coordinates(self,sizeY):
         return math.ceil(sizeY/(self.BOARD_HEIGHT/self.NUM_Y_CELLS))-1
-
-    def click_handler(self,event):
-        current_pos_x = chess.size_to_x_coordinates(event.x)
-        current_pos_y = chess.size_to_y_coordinates(event.y)
-        print(current_pos_x)
-        print(current_pos_y)
         
 
 if __name__ == "__main__":
@@ -76,8 +71,8 @@ if __name__ == "__main__":
     chess.create_board()
     board = Board()
     chess.display_pices(board)
-    '''game=Game(chess)'''
-    chess.board.bind("<Button-1>", chess.click_handler)
+    game=Game(chess)
+    game.start()
     window.mainloop()
         
 
