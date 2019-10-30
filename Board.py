@@ -24,7 +24,12 @@ class Board:
         self.white_king_alive=True
 
     def contains_pice(self,posX,posY):
-        return self.board[posX][posY]!=""
+        return self.board[posY][posX]!=""
+
     
-    def kings_alive(self):
-        return self.black_king_alive and self.white_king_alive
+    def contains_possible_move(self, posX, posY):
+        pass
+    
+    def contains_nothing(self, posX, posY):
+        pass
+    
