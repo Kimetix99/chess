@@ -1,4 +1,5 @@
 from Board import *
+from Chess import *
 
 class Game:
 
@@ -12,15 +13,38 @@ class Game:
     def click_handler(self,event):
         current_pos_x = self.chess.size_to_x_coordinates(event.x)
         current_pos_y = self.chess.size_to_y_coordinates(event.y)
-        if(self.board.contains_pice(current_pos_x,current_pos_y)):
+        if(self.board.contains_pice(current_pos_x,current_pos_y) and not self.board.contains_possible_move(current_pos_x,current_pos_y)):
             self.display_possible_moves(current_pos_x,current_pos_y)
-        
-        if(self.board.contains_possible_move(current_pos_x,current_pos_y)):
-            pass
-        
-        if(self.board.contains_nothing(current_pos_x,current_pos_y)):
-            pass
-        
-    def display_possible_moves(self, posX, posY):
-        pass
+        elif(not self.board.contains_pice(current_pos_x,current_pos_y) and self.board.contains_possible_move(current_pos_x,current_pos_y)):
+            self.move_pice(current_pos_x,current_pos_y)
+        elif(not self.board.contains_pice(current_pos_x,current_pos_y) and not self.board.contains_possible_move(current_pos_x,current_pos_y)):
+            self.reset_board()
+        else:
+            self.move_pice(current_pos_x,current_pos_y)
 
+    def display_possible_moves(self, posX, posY):
+        self.reset_board()
+        moves=self.board.board[posY][posX]["p"].display_moves(posX,posY)
+        for move in moves:
+            self.board.board[move[1]][move[0]]["m"]=[posY,posX]
+        self.chess.display_pices(self.board)
+
+    def move_pice(self, posX, posY):
+        pos=self.board.board[posY][posX]["m"]
+        if self.board.board[pos[0]][pos[1]]["p"].is_pawn():
+            if self.board.board[pos[0]][pos[1]]["p"].init_pos:
+                self.board.board[pos[0]][pos[1]]["p"].init_pos=False
+        self.board.board[posY][posX]["p"]=self.board.board[pos[0]][pos[1]]["p"]
+        self.board.board[pos[0]][pos[1]]["p"]=""
+        self.reset_board()
+    
+    def reset_board(self):
+        self.clean_moves()
+        self.chess.create_board()
+        self.chess.display_pices(self.board)
+    
+    def clean_moves(self):
+        for row in self.board.board:
+            for cell in row:
+                if cell["m"] != "":
+                    cell["m"] = ""

@@ -12,13 +12,12 @@ class Chess:
         self.NUM_X_CELLS = 8
         self.NUM_Y_CELLS = 8
         self.board=Canvas(window, height=self.BOARD_HEIGHT, width=self.BOARD_WIDTH)
+        self.cell_height = self.BOARD_HEIGHT/self.NUM_Y_CELLS
+        self.cell_width = self.BOARD_WIDTH/self.NUM_X_CELLS
 
     #Create board
     def create_board(self):
         
-        cell_height = self.BOARD_HEIGHT/self.NUM_Y_CELLS
-        cell_width = self.BOARD_WIDTH/self.NUM_X_CELLS
-
         current_height = 0
         current_width = 0
 
@@ -26,16 +25,16 @@ class Chess:
             for j in range (0,self.NUM_X_CELLS):
                 if i%2 == 0:
                     if j%2 == 0:
-                        self.board.create_rectangle(current_width, current_height, current_width+cell_width, current_height+cell_height, fill="#61b0ff")
+                        self.board.create_rectangle(current_width, current_height, current_width+self.cell_width, current_height+self.cell_height, fill="#61b0ff")
                     else:
-                        self.board.create_rectangle(current_width, current_height, current_width+cell_width, current_height+cell_height, fill="#ff9661")
+                        self.board.create_rectangle(current_width, current_height, current_width+self.cell_width, current_height+self.cell_height, fill="#ff9661")
                 else:
                     if j%2==0:
-                        self.board.create_rectangle(current_width, current_height, current_width+cell_width, current_height+cell_height, fill="#ff9661")
+                        self.board.create_rectangle(current_width, current_height, current_width+self.cell_width, current_height+self.cell_height, fill="#ff9661")
                     else:
-                        self.board.create_rectangle(current_width, current_height, current_width+cell_width, current_height+cell_height, fill="#61b0ff")
-                current_width += cell_width
-            current_height += cell_height
+                        self.board.create_rectangle(current_width, current_height, current_width+self.cell_width, current_height+self.cell_height, fill="#61b0ff")
+                current_width += self.cell_width
+            current_height += self.cell_height
             current_width = 0
         self.board.pack()
               
@@ -45,11 +44,18 @@ class Chess:
         for row in board.board:
             j = 1
             for pice in row:
-                if pice != "":
-                    self.board.create_image(self.x_coordinates_to_size(j),self.y_coordinates_to_size(i),image=pice.figure)
-                    self.board.pack()
-                    j+=1
+                if pice["m"] != "" and pice["p"]== "":
+                    self.board.create_rectangle(self.x_coordinates_to_size(j)-((self.BOARD_WIDTH/self.NUM_X_CELLS)/2),self.y_coordinates_to_size(i)-((self.BOARD_HEIGHT/self.NUM_Y_CELLS)/2), self.x_coordinates_to_size(j)+self.cell_width-((self.BOARD_WIDTH/self.NUM_X_CELLS)/2), self.y_coordinates_to_size(i)+self.cell_height-((self.BOARD_HEIGHT/self.NUM_Y_CELLS)/2), fill="#00FF3A")
+                elif pice['p'] == "" and pice['m'] == "":
+                    pass
+                elif pice["p"] != "" and pice["m"] == "":
+                    self.board.create_image(self.x_coordinates_to_size(j),self.y_coordinates_to_size(i),image=pice["p"].figure)
+                else:
+                    self.board.create_rectangle(self.x_coordinates_to_size(j)-((self.BOARD_WIDTH/self.NUM_X_CELLS)/2),self.y_coordinates_to_size(i)-((self.BOARD_HEIGHT/self.NUM_Y_CELLS)/2), self.x_coordinates_to_size(j)+self.cell_width-((self.BOARD_WIDTH/self.NUM_X_CELLS)/2), self.y_coordinates_to_size(i)+self.cell_height-((self.BOARD_HEIGHT/self.NUM_Y_CELLS)/2), fill="#00FF3A")
+                    self.board.create_image(self.x_coordinates_to_size(j),self.y_coordinates_to_size(i),image=pice["p"].figure)
+                j+=1  
             i += 1
+        self.board.pack()
     
     def x_coordinates_to_size(self,x):
         return (x*(self.BOARD_WIDTH/self.NUM_X_CELLS))-((self.BOARD_WIDTH/self.NUM_X_CELLS)/2)
