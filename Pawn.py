@@ -13,17 +13,32 @@ class Pawn(Pice):
                     board.board[posY+1][posX]["m"]=[posY,posX]
                     board.board[posY+2][posX]["m"]=[posY,posX]
             else:
-                if board.board[posY+1][posX]["p"] == "":
-                    if posY+1 < len(board.board) and posX < len(board.board[posY]):
-                        board.board[posY+1][posX]["m"]=[posY,posX]
+                if (posY+1) < len(board.board):
+                    if board.board[posY+1][posX]["p"] == "":
+                            board.board[posY+1][posX]["m"]=[posY,posX]
+            if (posY+1) < len(board.board):                
+                if board.board[posY+1][posX-1]['p']!='':
+                    if board.board[posY+1][posX-1]['p'].side!='black':
+                        board.board[posY+1][posX-1]["m"]=[posY,posX]
+                if board.board[posY+1][posX+1]['p']!='':
+                    if board.board[posY+1][posX+1]['p'].side!='black':
+                        board.board[posY+1][posX+1]["m"]=[posY,posX]
         else:
             if(self.init_pos):
                 if board.board[posY-1][posX]["p"] == "" and board.board[posY-2][posX]["p"] == "":
                     board.board[posY-1][posX]["m"]=[posY,posX]
                     board.board[posY-2][posX]["m"]=[posY,posX]
             else:
-                if board.board[posY-1][posX]["p"] == "":
-                    if posY+1 < len(board.board) and posX < len(board.board[posY]):
-                        board.board[posY-1][posX]["m"]=[posY,posX]
+                if posY-1 >= 0:
+                    if board.board[posY-1][posX]["p"] == "":
+                            board.board[posY-1][posX]["m"]=[posY,posX]
+            if posY-1 >= 0:
+                if board.board[posY-1][posX-1]['p']!='':
+                    if board.board[posY-1][posX-1]['p'].side!='white':
+                        board.board[posY-1][posX-1]["m"]=[posY,posX]
+                if board.board[posY-1][posX+1]['p']!='':
+                    if board.board[posY-1][posX+1]['p'].side!='white':
+                        board.board[posY-1][posX+1]["m"]=[posY,posX]
+        
         return board
     

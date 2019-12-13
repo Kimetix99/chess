@@ -21,7 +21,7 @@ class Game:
         elif(not self.board.contains_pice(current_pos_x,current_pos_y) and not self.board.contains_possible_move(current_pos_x,current_pos_y)):
             self.reset_board()
         else:
-            self.board.board[current_pos_x][current_pos_y].alive=False
+            self.board.board[current_pos_y][current_pos_x]['p'].alive=False
             self.move_pice(current_pos_x,current_pos_y)
 
     def move_pice(self, posX, posY):
