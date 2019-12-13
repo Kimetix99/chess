@@ -14,20 +14,15 @@ class Game:
         current_pos_x = self.chess.size_to_x_coordinates(event.x)
         current_pos_y = self.chess.size_to_y_coordinates(event.y)
         if(self.board.contains_pice(current_pos_x,current_pos_y) and not self.board.contains_possible_move(current_pos_x,current_pos_y)):
-            self.display_possible_moves(current_pos_x,current_pos_y)
+            self.board=self.board.board[current_pos_y][current_pos_x]["p"].display_moves(current_pos_x,current_pos_y,self.board)
+            self.chess.display_pices(self.board)
         elif(not self.board.contains_pice(current_pos_x,current_pos_y) and self.board.contains_possible_move(current_pos_x,current_pos_y)):
             self.move_pice(current_pos_x,current_pos_y)
         elif(not self.board.contains_pice(current_pos_x,current_pos_y) and not self.board.contains_possible_move(current_pos_x,current_pos_y)):
             self.reset_board()
         else:
+            self.board.board[current_pos_x][current_pos_y].alive=False
             self.move_pice(current_pos_x,current_pos_y)
-
-    def display_possible_moves(self, posX, posY):
-        self.reset_board()
-        moves=self.board.board[posY][posX]["p"].display_moves(posX,posY)
-        for move in moves:
-            self.board.board[move[1]][move[0]]["m"]=[posY,posX]
-        self.chess.display_pices(self.board)
 
     def move_pice(self, posX, posY):
         pos=self.board.board[posY][posX]["m"]
