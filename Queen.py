@@ -5,5 +5,5 @@ class Queen(Pice):
     def __init__(self, id, side, figure, alive):
         super(Queen, self).__init__(id, side, figure, alive)
 
-    def display_moves(self):
+    def display_moves(self,posX, posY, board):
         print('Queen Moves')
