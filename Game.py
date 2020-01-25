@@ -20,7 +20,8 @@ class Game:
         if self.containsPlayerPice(posX,posY):
             print('Show me some moves')
         elif self.isMoveCell(posX,posY):
-            print('I wana move')
+            print('Moved')
+            changeTurn()
         else:
             print('Yoyo, chill let me alone')
     
@@ -29,3 +30,9 @@ class Game:
 
     def isMoveCell(self,posX,posY):
         return self.board.board[posY][posX]['m'] != ''
+
+    def changeTurn():
+        if self.turn.equals(self.player1):
+            self.turn = self.player2
+        else:
+            self.turn = self.player1
