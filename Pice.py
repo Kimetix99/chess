@@ -6,8 +6,3 @@ class Pice:
         self.figure=figure
         self.alive=alive
 
-    def is_pawn(self):
-        if self.id=="pawn":
-            return True
-        else:
-            return False

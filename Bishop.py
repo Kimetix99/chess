@@ -5,5 +5,3 @@ class Bishop(Pice):
     def __init__(self, id, side, figure, alive):
         super(Bishop, self).__init__(id, side, figure, alive)
 
-    def display_moves(self,posX, posY, board):
-        print('Bishop Moves')
