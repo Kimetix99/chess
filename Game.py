@@ -21,11 +21,23 @@ class Game:
             self.board.actualizeMoves(posX, posY)
         elif self.board.isMoveCell(posX,posY):
             self.board.movePice(posX,posY)
+            self.clean_board_moves()
+            self.changeTurn()
         else:
-            print('Yoyo, chill let me alone')
-        self.chess.displayPices(self.board)
-    def changeTurn():
+            self.clean_board_moves()
+        self.reset_board()
+    
+    def changeTurn(self):
         if self.turn.equals(self.player1):
             self.turn = self.player2
         else:
             self.turn = self.player1
+
+    def reset_board(self):
+        self.chess.create_board()
+        self.chess.display_pices(self.board)
+
+    def clean_board_moves(self):
+        for row in self.board.board:
+            for cell in row:
+                cell['m'] = ''

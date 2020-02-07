@@ -15,27 +15,34 @@ class Pawn(Pice):
 
     def move_forward(self, moves, board):
             if self.init_pos:
-                    moves.append(Move((self.posX, self.posY), (self.posX, self.check_side(self.side, self.posY, 2))))
-                    moves.append(Move((self.posX, self.posY), (self.posX, self.check_side(self.side, self.posY, 1))))
+                if self.empty_cell(board, self.posX, self.check_side(2)) and self.empty_cell(board, self.posX, self.check_side(1)):
+                    moves.append(Move((self.posX, self.posY), (self.posX, self.check_side(2))))
+                if self.empty_cell(board, self.posX, self.check_side(1)):
+                    moves.append(Move((self.posX, self.posY), (self.posX, self.check_side(1))))
             else:
-                    moves.append(Move((self.posX,self.posY), (self.posX,self.check_side(self.side, self.posY, 1))))
+                if self.in_board(board) and self.empty_cell(board, self.posX, self.check_side(1)):
+                    moves.append(Move((self.posX,self.posY), (self.posX,self.check_side(1))))
 
     def kill_move(self, moves, board):
-        if self.can_kill_left(board):
-            moves.append(Move((self.posX, self.posY), (self.posX-1, self.check_side(self.side, self.posY, 1))))
-        if self.can_kill_right(board):
-            moves.append(Move((self.posX, self.posY), (self.posX+1, self.check_side(self.side, self.posY, 1))))
+        if self.in_board(board) and self.can_kill_left(board):
+            moves.append(Move((self.posX, self.posY), (self.posX-1, self.check_side(1))))
+        if self.in_board(board) and self.can_kill_right(board):
+            moves.append(Move((self.posX, self.posY), (self.posX+1, self.check_side(1))))
 
     def can_kill_left(self, board):
-        return board[self.posX-1][self.check_side(self.side, self.posY,1)]['p'] != ''
+        return self.posX != 0 and board[self.check_side(1)][self.posX-1]['p'] != '' and self.side != board[self.check_side(1)][self.posX-1]['p'].side
 
     def can_kill_right(self, board):
-        return board[self.posX+1][self.check_side(self.side, self.posY,1)]['p'] != ''
+        return self.posX != 7 and board[self.check_side(1)][self.posX+1]['p'] != '' and self.side != board[self.check_side(1)][self.posX+1]['p'].side
     
-    def check_side(self, side,pos,value):
-        if side == 'black': 
-            return pos-value 
+    def check_side(self, value):
+        if self.side == 'black': 
+            return self.posY+value 
         else: 
-            return pos+value 
-    
+            return self.posY-value 
        
+    def empty_cell(self, board, posX, posY):
+        return board[posY][posX]['p'] == ''
+    
+    def in_board(self, board):
+        return self.check_side(1) <= 7 and self.check_side(1)>=0

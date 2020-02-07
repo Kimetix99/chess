@@ -35,4 +35,18 @@ class Board:
         for move in moves:
             self.board[move.destination[1]][move.destination[0]]['m'] = move
             
-    
+    def movePice(self, posX, posY):
+        move = self.board[posY][posX]['m']
+        self.move_to_destination(posX ,posY, move)
+        self.check_init_pos(posX, posY, move)
+        
+
+    def move_to_destination(self, posX, posY, move):
+        self.board[move.destination[1]][move.destination[0]]['p'] = self.board[move.origin[1]][move.origin[0]]['p']
+        self.board[move.destination[1]][move.destination[0]]['p'].posX=move.destination[0]
+        self.board[move.destination[1]][move.destination[0]]['p'].posY=move.destination[1]
+        self.board[move.origin[1]][move.origin[0]]['p'] = ''
+
+    def check_init_pos(self, posX, posY, move):
+        if self.board[move.destination[1]][move.destination[0]]['p'].init_pos:
+            self.board[move.destination[1]][move.destination[0]]['p'].init_pos = False

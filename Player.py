@@ -4,5 +4,5 @@ class Player:
         self.PlayerID=PlayerID
         self.side=side
 
-    def equals(player):
+    def equals(self, player):
         return self.PlayerID == player.PlayerID
