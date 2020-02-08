@@ -37,16 +37,42 @@ class Board:
             
     def movePice(self, posX, posY):
         move = self.board[posY][posX]['m']
-        self.move_to_destination(posX ,posY, move)
-        self.check_init_pos(posX, posY, move)
+        self.move_to_destination(move)
         
+    def move_to_destination(self, move):
+        if move.enrock:
+            self.exchange_pice(move)
+        else:
+            self.replace_pice(move)
+            self.check_init_pos(move)
 
-    def move_to_destination(self, posX, posY, move):
+    def check_init_pos(self, move):
+        if isinstance(self.board[move.destination[1]][move.destination[0]]['p'],Pawn) or isinstance(self.board[move.destination[1]][move.destination[0]]['p'],Tower) or isinstance(self.board[move.destination[1]][move.destination[0]]['p'],King):
+            if self.board[move.destination[1]][move.destination[0]]['p'].init_pos:
+                self.board[move.destination[1]][move.destination[0]]['p'].init_pos = False
+
+    def exchange_pice(self, move):
+        tower=self.board[move.destination[1]][move.destination[0]]['p']
+        posX = (move.origin[0]+move.destination[0])//2
+        self.board[move.origin[1]][posX]['p']=self.board[move.origin[1]][move.origin[0]]['p']
+        self.board[move.origin[1]][posX]['p'].init_pos = False
+        if posX == 1:
+            self.board[move.destination[1]][posX+1]['p'] = self.board[move.destination[1]][move.destination[0]]['p']
+            self.board[move.destination[1]][posX+1]['p'].init_pos = False
+        else:
+            self.board[move.destination[1]][posX-1]['p'] = self.board[move.destination[1]][move.destination[0]]['p']
+            self.board[move.destination[1]][posX-1]['p'].init_pos = False
+        self.board[move.origin[1]][move.origin[0]]['p'] = ''
+        self.board[move.destination[1]][move.destination[0]]['p'] = ''
+        
+    def replace_pice(self, move):
+        if self.pawn_reaches_final(move):
+            self.board[move.origin[1]][move.origin[0]]['p'] = Queen("queen", self.board[move.origin[1]][move.origin[0]]['p'].side, PhotoImage(file="./img/"+self.board[move.origin[1]][move.origin[0]]['p'].side+"_q.png"),True,move.origin[1],move.origin[0])
         self.board[move.destination[1]][move.destination[0]]['p'] = self.board[move.origin[1]][move.origin[0]]['p']
         self.board[move.destination[1]][move.destination[0]]['p'].posX=move.destination[0]
         self.board[move.destination[1]][move.destination[0]]['p'].posY=move.destination[1]
         self.board[move.origin[1]][move.origin[0]]['p'] = ''
 
-    def check_init_pos(self, posX, posY, move):
-        if self.board[move.destination[1]][move.destination[0]]['p'].init_pos:
-            self.board[move.destination[1]][move.destination[0]]['p'].init_pos = False
+    def pawn_reaches_final(self, move):
+        return ((move.destination[1] == 7 and isinstance(self.board[move.origin[1]][move.origin[0]]['p'],Pawn) and self.board[move.origin[1]][move.origin[0]]['p'].side == 'black') 
+                or (move.destination[1] == 0 and isinstance(self.board[move.origin[1]][move.origin[0]]['p'],Pawn) and self.board[move.origin[1]][move.origin[0]]['p'].side == 'white'))

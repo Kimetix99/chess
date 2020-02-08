@@ -16,18 +16,18 @@ class Pawn(Pice):
     def move_forward(self, moves, board):
             if self.init_pos:
                 if self.empty_cell(board, self.posX, self.check_side(2)) and self.empty_cell(board, self.posX, self.check_side(1)):
-                    moves.append(Move((self.posX, self.posY), (self.posX, self.check_side(2))))
+                    moves.append(Move((self.posX, self.posY), (self.posX, self.check_side(2)),False))
                 if self.empty_cell(board, self.posX, self.check_side(1)):
-                    moves.append(Move((self.posX, self.posY), (self.posX, self.check_side(1))))
+                    moves.append(Move((self.posX, self.posY), (self.posX, self.check_side(1)),False))
             else:
                 if self.in_board(board) and self.empty_cell(board, self.posX, self.check_side(1)):
-                    moves.append(Move((self.posX,self.posY), (self.posX,self.check_side(1))))
+                    moves.append(Move((self.posX,self.posY), (self.posX,self.check_side(1)),False))
 
     def kill_move(self, moves, board):
         if self.in_board(board) and self.can_kill_left(board):
-            moves.append(Move((self.posX, self.posY), (self.posX-1, self.check_side(1))))
+            moves.append(Move((self.posX, self.posY), (self.posX-1, self.check_side(1)),False))
         if self.in_board(board) and self.can_kill_right(board):
-            moves.append(Move((self.posX, self.posY), (self.posX+1, self.check_side(1))))
+            moves.append(Move((self.posX, self.posY), (self.posX+1, self.check_side(1)),False))
 
     def can_kill_left(self, board):
         return self.posX != 0 and board[self.check_side(1)][self.posX-1]['p'] != '' and self.side != board[self.check_side(1)][self.posX-1]['p'].side

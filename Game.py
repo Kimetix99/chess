@@ -17,9 +17,14 @@ class Game:
     def click_handler(self,event):
         posX = self.chess.size_to_x_coordinates(event.x)
         posY = self.chess.size_to_y_coordinates(event.y)
-        if self.board.containsPlayerPice(posX, posY, self.turn):
+        if self.board.containsPlayerPice(posX, posY, self.turn) and not self.board.isMoveCell(posX,posY):
+            self.clean_board_moves()
             self.board.actualizeMoves(posX, posY)
-        elif self.board.isMoveCell(posX,posY):
+        elif self.board.isMoveCell(posX,posY) and not self.board.containsPlayerPice(posX, posY, self.turn):
+            self.board.movePice(posX,posY)
+            self.clean_board_moves()
+            self.changeTurn()
+        elif self.board.containsPlayerPice(posX, posY, self.turn) and self.board.isMoveCell(posX,posY):
             self.board.movePice(posX,posY)
             self.clean_board_moves()
             self.changeTurn()
