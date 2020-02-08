@@ -30,6 +30,8 @@ class Game:
             self.changeTurn()
         else:
             self.clean_board_moves()
+        if self.check_end_of_game():
+            self.chess.window.destroy()
         self.reset_board()
     
     def changeTurn(self):
@@ -46,3 +48,6 @@ class Game:
         for row in self.board.board:
             for cell in row:
                 cell['m'] = ''
+
+    def check_end_of_game(self):
+        return not self.board.check_kings_alive()

@@ -80,11 +80,3 @@ if __name__ == "__main__":
     game=Game(chess,board)
     game.start_game()
     window.mainloop()
-        
-
-
-
-    
-
-
-

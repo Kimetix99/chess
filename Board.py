@@ -68,6 +68,11 @@ class Board:
     def replace_pice(self, move):
         if self.pawn_reaches_final(move):
             self.board[move.origin[1]][move.origin[0]]['p'] = Queen("queen", self.board[move.origin[1]][move.origin[0]]['p'].side, PhotoImage(file="./img/"+self.board[move.origin[1]][move.origin[0]]['p'].side+"_q.png"),True,move.origin[1],move.origin[0])
+        if self.king_dies(move):
+            if self.is_white_king(move):
+                self.white_king_alive = False
+            else:
+                self.black_king_alive = False
         self.board[move.destination[1]][move.destination[0]]['p'] = self.board[move.origin[1]][move.origin[0]]['p']
         self.board[move.destination[1]][move.destination[0]]['p'].posX=move.destination[0]
         self.board[move.destination[1]][move.destination[0]]['p'].posY=move.destination[1]
@@ -76,3 +81,12 @@ class Board:
     def pawn_reaches_final(self, move):
         return ((move.destination[1] == 7 and isinstance(self.board[move.origin[1]][move.origin[0]]['p'],Pawn) and self.board[move.origin[1]][move.origin[0]]['p'].side == 'black') 
                 or (move.destination[1] == 0 and isinstance(self.board[move.origin[1]][move.origin[0]]['p'],Pawn) and self.board[move.origin[1]][move.origin[0]]['p'].side == 'white'))
+
+    def check_kings_alive(self):
+        return self.black_king_alive and self.white_king_alive
+
+    def king_dies(self, move):
+        return isinstance(self.board[move.destination[1]][move.destination[0]]['p'], King)
+
+    def is_white_king(self, move):
+        return self.board[move.destination[1]][move.destination[0]]['p'].side == 'white'
