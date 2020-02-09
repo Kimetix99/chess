@@ -7,6 +7,7 @@ from King import King
 from Queen import Queen
 from Horse import Horse
 from Move import Move
+import math
 
 class Board:
 
@@ -52,11 +53,10 @@ class Board:
                 self.board[move.destination[1]][move.destination[0]]['p'].init_pos = False
 
     def exchange_pice(self, move):
-        tower=self.board[move.destination[1]][move.destination[0]]['p']
-        posX = (move.origin[0]+move.destination[0])//2
+        posX = self.get_king_pos(move)
         self.board[move.origin[1]][posX]['p']=self.board[move.origin[1]][move.origin[0]]['p']
         self.board[move.origin[1]][posX]['p'].init_pos = False
-        if posX == 1:
+        if posX == 1 or posX == 2:
             self.board[move.destination[1]][posX+1]['p'] = self.board[move.destination[1]][move.destination[0]]['p']
             self.board[move.destination[1]][posX+1]['p'].init_pos = False
         else:
@@ -90,3 +90,13 @@ class Board:
 
     def is_white_king(self, move):
         return self.board[move.destination[1]][move.destination[0]]['p'].side == 'white'
+
+    def round_half_down(n, decimals=0):
+        multiplier = 10 ** decimals
+        return math.ceil(n*multiplier - 0.5) / multiplier
+    
+    def get_king_pos(self,move):
+        if self.board[move.origin[1]][move.origin[0]]['p'].side == 'black':
+            return math.ceil((move.origin[0]+move.destination[0])/2)
+        else:
+            return math.floor((move.origin[0]+move.destination[0])/2)
