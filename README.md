@@ -1,3 +1,3 @@
 # chess
 
-2 Player chess software.
+2 Player chess game.
