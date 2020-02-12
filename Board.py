@@ -20,7 +20,7 @@ class Board:
             [{"p":"","m":""},{"p":"","m":""},{"p":"","m":""},{"p":"","m":""},{"p":"","m":""},{"p":"","m":""},{"p":"","m":""},{"p":"","m":""}],
             [{"p":"","m":""},{"p":"","m":""},{"p":"","m":""},{"p":"","m":""},{"p":"","m":""},{"p":"","m":""},{"p":"","m":""},{"p":"","m":""}],
             [{"p":Pawn("pawn","white",PhotoImage(file="./img/white_p.png"),True,6,0),"m":""},{"p":Pawn("pawn","white",PhotoImage(file="./img/white_p.png"),True,6,1),"m":""},{"p":Pawn("pawn","white",PhotoImage(file="./img/white_p.png"),True,6,2),"m":""},{"p":Pawn("pawn","white",PhotoImage(file="./img/white_p.png"),True,6,3),"m":""},{"p":Pawn("pawn","white",PhotoImage(file="./img/white_p.png"),True,6,4),"m":""},{"p":Pawn("pawn","white",PhotoImage(file="./img/white_p.png"),True,6,5),"m":""},{"p":Pawn("pawn","white",PhotoImage(file="./img/white_p.png"),True,6,6),"m":""},{"p":Pawn("pawn","white",PhotoImage(file="./img/white_p.png"),True,6,7),"m":""}],
-            [{"p":Tower("tower","white",PhotoImage(file="./img/white_t.png"),True,7,0),"m":""},{"p":Horse("horse","white",PhotoImage(file="./img/white_h.png"),True,7,1),"m":""},{"p":Bishop("bishop","white",PhotoImage(file="./img/white_b.png"),True,7,2),"m":""},{"p":Queen("queen", "white",PhotoImage(file="./img/white_q.png"),True,7,4),"m":""},{"p":King("king","white",PhotoImage(file="./img/white_k.png"),True,7,3),"m":""},{"p":Bishop("bishop","white",PhotoImage(file="./img/white_b.png"),True,7,5),"m":""},{"p":Horse("horse","white",PhotoImage(file="./img/white_h.png"),True,7,6),"m":""},{"p":Tower("tower","white",PhotoImage(file="./img/white_t.png"),True,7,7),"m":""}]
+            [{"p":Tower("tower","white",PhotoImage(file="./img/white_t.png"),True,7,0),"m":""},{"p":Horse("horse","white",PhotoImage(file="./img/white_h.png"),True,7,1),"m":""},{"p":Bishop("bishop","white",PhotoImage(file="./img/white_b.png"),True,7,2),"m":""},{"p":Queen("queen", "white",PhotoImage(file="./img/white_q.png"),True,7,3),"m":""},{"p":King("king","white",PhotoImage(file="./img/white_k.png"),True,7,4),"m":""},{"p":Bishop("bishop","white",PhotoImage(file="./img/white_b.png"),True,7,5),"m":""},{"p":Horse("horse","white",PhotoImage(file="./img/white_h.png"),True,7,6),"m":""},{"p":Tower("tower","white",PhotoImage(file="./img/white_t.png"),True,7,7),"m":""}]
         ]
         self.black_king_alive=True
         self.white_king_alive=True
@@ -96,7 +96,4 @@ class Board:
         return math.ceil(n*multiplier - 0.5) / multiplier
     
     def get_king_pos(self,move):
-        if self.board[move.origin[1]][move.origin[0]]['p'].side == 'black':
             return math.ceil((move.origin[0]+move.destination[0])/2)
-        else:
-            return math.floor((move.origin[0]+move.destination[0])/2)
