@@ -90,10 +90,6 @@ class Board:
 
     def is_white_king(self, move):
         return self.board[move.destination[1]][move.destination[0]]['p'].side == 'white'
-
-    def round_half_down(n, decimals=0):
-        multiplier = 10 ** decimals
-        return math.ceil(n*multiplier - 0.5) / multiplier
     
     def get_king_pos(self,move):
             return math.ceil((move.origin[0]+move.destination[0])/2)
